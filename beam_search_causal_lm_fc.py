@@ -14,6 +14,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('model_dir')
     parser.add_argument('prompts', nargs='+')
+    parser.add_argument('device')
     args = parser.parse_args()
 
     tokenizer = AutoTokenizer.from_pretrained(args.model_dir)

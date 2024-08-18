@@ -13,6 +13,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('model_dir')
     parser.add_argument('prompt')
+    parser.add_argument('device')
     args = parser.parse_args()
 
     device = args.device  # GPU can be used as well

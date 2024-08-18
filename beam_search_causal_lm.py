@@ -15,11 +15,12 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('model_dir')
     parser.add_argument('prompts', nargs='+')
+    parser.add_argument('device')
     args = parser.parse_args()
 
     device = args.device  # GPU can be used as well
     print(f'use {device}')
-    
+
     pipe = openvino_genai.LLMPipeline(args.model_dir, device)
 
     config = openvino_genai.GenerationConfig()
