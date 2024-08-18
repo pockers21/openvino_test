@@ -5,15 +5,28 @@ from transformers.generation.logits_process import LogitsProcessor, LogitsProces
 from transformers.generation.logits_process import InfNanRemoveLogitsProcessor, MinLengthLogitsProcessor
 import openvino as ov
 import sys
+import argparse
+
+parser = argparse.ArgumentParser(description="加载和使用语言模型")
+parser.add_argument("--use_cache",  default=False, help="use cache or not", action='store_true')
+parser.add_argument("--do_sample",  default=False, help="do sample or not", action='store_true')
+parser.add_argument("--device", type=str, default="CPU", help="device name")
+
+# 解析命令行参数
+args = parser.parse_args()
+print(args)
 
 core = ov.Core()
 available_devices = core.available_devices
 print(available_devices)
 
-#model_id = './qwen2_7b_7_31_cache_false/qwen2_7b_7_31_cache_false'
-model_id = './qwen2_7b_7_31_cache_true/qwen2_7b_7_31'
+model_id = "/media/sonald/KESU/data/"
+if args.use_cache:
+    model_id = 'qwen2_7b_instruct_818_cache_true'
+else:
+    model_id = 'qwen2_7b_instruct_818_cache_false'
 # model_id_7b = './openvino-7b'model = OVModelForCausalLM.from_pretrained(model_id, compile=False, use_cache=True, device="GPU")
-model = OVModelForCausalLM.from_pretrained(model_id, compile=False, use_cache=True, device="GPU")
+model = OVModelForCausalLM.from_pretrained(model_id, compile=False, use_cache=args.use_cache, device=args.device)
 model.eval()
 tokenizer = AutoTokenizer.from_pretrained(model_id)
 
@@ -30,10 +43,9 @@ def predict(prompt: str):
     inputs = tokenizer.apply_chat_template(conv, add_generation_prompt=False, return_tensors="pt")
 
     output = model.generate(inputs.to(model.device),
-                            max_new_tokens=500, do_sample=False, temperature=0.7,
+                            max_new_tokens=500, do_sample=args.do_sample, temperature=0.7,
                                 eos_token_id=tokenizer.eos_token_id)
     resp = tokenizer.batch_decode(output, skip_special_tokens=True)[0]
     print(resp)
 
 predict(prompt)
-
