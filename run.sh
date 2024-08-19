@@ -18,8 +18,8 @@ normal_exe_script_dict["fc"]="infer_fc.py"
 base_data_dir="/home/uos/openvino_test/openvino_model_7b/"
 
 model_dirs=(
-    #${base_data_dir}qwen2_1.5b_instruct_818_cache_true
-    ${base_data_dir}qwen2_1.5b_instruct_818_cache_false
+    ${base_data_dir}qwen2_1.5b_instruct_818_cache_true
+    #${base_data_dir}qwen2_1.5b_instruct_818_cache_false
     #${base_data_dir}uos_july_7b_818_cache_false
     #${base_data_dir}uos_july_7b_818_cache_true
     #${base_data_dir}qwen2_7b_instruct_818_cache_false
