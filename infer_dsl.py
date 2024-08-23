@@ -6,7 +6,7 @@ from transformers.generation.logits_process import InfNanRemoveLogitsProcessor, 
 import openvino as ov
 import sys
 import argparse
-
+import time
 parser = argparse.ArgumentParser(description="加载和使用语言模型")
 parser.add_argument("--use_cache",  default=False, help="use cache or not", action='store_true')
 parser.add_argument("--do_sample",  default=False, help="do sample or not", action='store_true')
@@ -51,11 +51,14 @@ def predict(prompt: str):
         {"role": "user", "content": prompt},
     ]
     inputs = tokenizer.apply_chat_template(conv, add_generation_prompt=True, return_tensors="pt")
-
+    start_time = time.time() 
     output = model.generate(inputs.to(model.device),
                             logits_processor=logits_processor,
                             max_new_tokens=500, do_sample=args.do_sample, temperature=0.7,
                                 eos_token_id=tokenizer.eos_token_id)
+    end_time = time.time()  
+    elapsed_time = end_time - start_time
+    print(f'cost:{elapsed_time}')
     resp = tokenizer.batch_decode(output, skip_special_tokens=True)[0]
     print(resp)
 

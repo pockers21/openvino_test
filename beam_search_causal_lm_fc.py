@@ -46,8 +46,12 @@ def main():
     print("=====")
 
 
-    beams = pipe.generate(decoded_text, config)
-    print(beams)
+    start_time = time.time() 
+    res = pipe.generate(decoded_text, config)
+    end_time = time.time()  
+    elapsed_time = end_time - start_time
+    print(f'cost:{elapsed_time}')
+    print(f'res:{res}')
 
 
 if '__main__' == __name__:

@@ -6,6 +6,7 @@ import argparse
 import openvino_genai
 from transformers import AutoTokenizer
 import argparse
+import time
 
 parser = argparse.ArgumentParser(description="加载和使用语言模型")
 parser.add_argument("--device", type=str, default="CPU", help="device name")
@@ -40,8 +41,14 @@ def main():
     print("====")
     # 输出解码后的文本
     print('Decoded text:', decoded_text)
-    print("=====")
-    print(pipe.generate(decoded_text, config))
+
+    start_time = time.time() 
+    res = pipe.generate(decoded_text, config)
+    end_time = time.time()  
+    elapsed_time = end_time - start_time
+    print(f'cost:{elapsed_time}')
+    print(f'res:{res}')
+
 
 
 if '__main__' == __name__:

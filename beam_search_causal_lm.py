@@ -6,6 +6,7 @@ import argparse
 import openvino_genai
 
 import argparse
+import time
 
 parser = argparse.ArgumentParser(description="加载和使用语言模型")
 parser.add_argument("--device", type=str, default="CPU", help="device name")
@@ -29,8 +30,12 @@ def main():
     config.num_beams = 15
     config.num_return_sequences = config.num_beams
 
-    beams = pipe.generate(args.prompts, config)
-    print(beams)
+    start_time = time.time() 
+    res = pipe.generate(args.prompt, config)
+    end_time = time.time()  
+    elapsed_time = end_time - start_time
+    print(f'cost:{elapsed_time}')
+    print(f'res:{res}')
 
 
 if '__main__' == __name__:

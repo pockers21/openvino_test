@@ -5,6 +5,7 @@
 import argparse
 import openvino_genai
 import argparse
+import time
 
 parser = argparse.ArgumentParser(description="加载和使用语言模型")
 parser.add_argument("--device", type=str, default="CPU", help="device name")
@@ -23,7 +24,14 @@ def main():
     config = openvino_genai.GenerationConfig()
     config.max_new_tokens = 100
 
-    print(pipe.generate(args.prompt, config))
+    start_time = time.time() 
+    res = pipe.generate(args.prompt, config)
+    end_time = time.time()  
+    elapsed_time = end_time - start_time
+    print(f'cost:{elapsed_time}')
+    print(f'res:{res}')
+    
+    
 
 
 if '__main__' == __name__:
