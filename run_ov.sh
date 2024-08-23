@@ -12,13 +12,17 @@ run_normal=true
 run_genai=true
 
 declare -A normal_exe_script_dict
-normal_exe_script_dict["ans"]="infer_ans.py"
-normal_exe_script_dict["fc"]="infer_fc.py"
+normal_exe_script_dict["ans"]="infer_ans_ov.py"
+normal_exe_script_dict["fc"]="infer_fc_ov.py"
+normal_exe_script_dict["dsl"]="infer_dsl_ov.py"
 
-base_data_dir="/home/uos/openvino_test/script/"
+base_data_dir="/home/uos/openvino_test/openvino_test/"
 
 model_dirs=(
-    ${base_data_dir}qwen2_1.5b_instruct_818_cache_true
+    ${base_data_dir}qwen2_1.5b_v3_full_plus_ov
+    #${base_data_dir}qwen2_7b_instruct_818_cache_true
+    #{base_data_dir}qwen2_7B_v2_total_plus_ov
+    #${base_data_dir}qwen2_1.5b_instruct_818_cache_true
     #${base_data_dir}qwen2_1.5b_instruct_818_cache_false
     #${base_data_dir}uos_july_7b_818_cache_false
     #${base_data_dir}uos_july_7b_818_cache_true
@@ -26,9 +30,7 @@ model_dirs=(
     #${base_data_dir}qwen2_7b_instruct_818_cache_true
 )
 
-base_genai_code_dir="/home/uos/openvino_test/openvino.genai/samples/python/"
-greedy_dir=${base_genai_code_dir}greedy_causal_lm
-beam_dir=${base_genai_code_dir}beam_search_causal_lm
+
 
 declare -A genai_exe_script_dict
 
@@ -69,9 +71,9 @@ run_genai_exe_script() {
 
         #cd ${beam_dir}
         if [[ "$mode" == "ans" ]]; then
-            script="beam_search_causal_lm.py"
+            script="nucleus_causal_lm.py"
         else
-            script="beam_search_causal_lm_fc.py"
+            script="nucleus_causal_lm_fc.py"
         fi
         python ${script} $model_dir "Why is the Sun yellow?" CPU
         python ${script} $model_dir "Why is the Sun yellow?" GPU

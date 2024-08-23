@@ -36,7 +36,7 @@ logits_processor = LogitsProcessorList()
 
 
 system = '请根据问题决定是否使用工具，若使用工具则并根据问题给出正确的函数调用- [{"description":"播放某部影片","name":"a_playOneMovie","parameters":{"properties":{"name":{"description":"影片名称","type":"string"}},"required":[],"type":"object"}}]'
-prompt = '播放电影葫芦娃'
+prompt = '播放电影卧虎藏龙'
 
 # pipe = pipeline("text-generation", model=model, tokenizer=tokenizer)
 # output = pipe(prompt)

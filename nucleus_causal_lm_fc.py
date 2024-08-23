@@ -31,10 +31,11 @@ def main():
     pipe = openvino_genai.LLMPipeline(args.model_dir, device)
 
     config = openvino_genai.GenerationConfig()
-    config.max_new_tokens = 40
-    config.num_beam_groups = 3
-    config.num_beams = 15
-    config.num_return_sequences = config.num_beams
+    config.max_new_tokens = 100
+    config.do_sample=True      
+    config.top_p=0.8             
+    config.top_k=20               
+    config.temperature=0.7   
 
     print(f'inputs:{inputs}')
     inputs_list = inputs[0].tolist()
