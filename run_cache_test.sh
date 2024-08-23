@@ -15,7 +15,7 @@ declare -A normal_exe_script_dict
 normal_exe_script_dict["ans"]="infer_ans.py"
 normal_exe_script_dict["fc"]="infer_fc.py"
 
-base_data_dir="/home/uos/openvino_test/openvino_model_7b/"
+base_data_dir="/home/uos/openvino_test/script/"
 
 model_dirs=(
     ${base_data_dir}qwen2_1.5b_instruct_818_cache_true
@@ -57,7 +57,7 @@ run_normal_exe_script() {
 
 run_genai_exe_script() {
     for model_dir in "${model_dirs[@]}"; do
-        cd ${greedy_dir}
+        #cd ${greedy_dir}
         # cache false
         if [[ "$mode" == "ans" ]]; then
             script="greedy_causal_lm.py"
@@ -67,7 +67,7 @@ run_genai_exe_script() {
         python ${script} $model_dir "Why is the Sun yellow?" CPU
         python ${script} $model_dir "Why is the Sun yellow?" GPU
 
-        cd ${beam_dir}
+        #cd ${beam_dir}
         if [[ "$mode" == "ans" ]]; then
             script="beam_search_causal_lm.py"
         else
