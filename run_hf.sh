@@ -19,7 +19,8 @@ normal_exe_script_dict["dsl"]="infer_dsl_hf.py"
 base_data_dir="/home/uos/openvino_test/openvino_test/"
 
 model_dirs=(
-    ${base_data_dir}qwen2_1.5b_v3_full_plus_ov
+    ${base_data_dir}qwen2_1.5B_v1_total_plus_ov_i4
+    #${base_data_dir}qwen2_1.5b_v3_full_plus_ov
     #${base_data_dir}qwen2_7b_instruct_818_cache_true
     #{base_data_dir}qwen2_7B_v2_total_plus_ov
     #${base_data_dir}qwen2_1.5b_instruct_818_cache_true

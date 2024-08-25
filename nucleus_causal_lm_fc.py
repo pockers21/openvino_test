@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # Copyright (C) 2024 Intel Corporation
 # SPDX-License-Identifier: Apache-2.0
-
+import time
 import argparse
 import openvino_genai
 from transformers import AutoTokenizer
