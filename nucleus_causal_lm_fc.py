@@ -19,7 +19,7 @@ def main():
 
     tokenizer = AutoTokenizer.from_pretrained(args.model_dir)
     system = '请根据问题决定是否使用工具，若使用工具则并根据问题给出正确的函数调用- [{"description":"播放某部影片","name":"a_playOneMovie","parameters":{"properties":{"name":{"description":">影片名称","type":"string"}},"required":[],"type":"object"}}]'
-    prompt = '播放电影葫芦娃'
+    prompt = '播放电影卧虎藏龙'
     conv = [{"role": "system", "content": system},
         {"role": "user", "content": prompt},
     ]

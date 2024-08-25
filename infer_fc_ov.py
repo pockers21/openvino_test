@@ -50,8 +50,9 @@ def predict(prompt: str):
     start_time = time.time() 
     output = model.generate(inputs.to(model.device),
                             logits_processor=logits_processor,
-                            max_new_tokens=500, do_sample=args.do_sample, temperature=0.7,
-                                eos_token_id=tokenizer.eos_token_id)
+                            max_new_tokens=500, do_sample=args.do_sample, 
+                            temperature=0.7,
+                            eos_token_id=tokenizer.eos_token_id)
     end_time = time.time()  
     elapsed_time = end_time - start_time
     print(f'cost:{elapsed_time}')
