@@ -5,7 +5,7 @@ NC='\033[0m' #
 
 export PS4="${RED}+\$ ${NC}"
 
-mode="fc"
+mode="dsl"
 
 # Control variables
 run_normal=true
@@ -20,9 +20,9 @@ base_data_dir="/home/uos/openvino_test/openvino_test/"
 
 model_dirs=(
     #${base_data_dir}qwen2_1.5b_v3_full_plus_ov_i8
-    ${base_data_dir}qwen2_1.5B_v2_total_plus_ov_i8
+    #${base_data_dir}qwen2_1.5B_v2_total_plus_ov_i8
     ${base_data_dir}qwen2_1.5B_v1_total_plus_ov_i8
-    ${base_data_dir}qwen2_7B_v2_total_plus_ov_i8
+    #${base_data_dir}qwen2_7B_v2_total_plus_ov_i8
     #${base_data_dir}qwen2_1.5b_v3_full_plus_ov
     #${base_data_dir}qwen2_7b_instruct_818_cache_true
     #{base_data_dir}qwen2_7B_v2_total_plus_ov
@@ -61,24 +61,26 @@ run_normal_exe_script() {
     done
 }
 
+declare -A greedy_script_dict
+greedy_script_dict["ans"]="greedy_causal_lm.py"
+greedy_script_dict["fc"]="greedy_causal_lm_fc.py"
+greedy_script_dict["dsl"]="greedy_causal_lm_dsl.py"
+
+declare -A nucleus_script_dict
+nucleus_script_dict["ans"]="nucleus_causal_lm.py"
+nucleus_script_dict["fc"]="nucleus_causal_lm_fc.py"
+nucleus_script_dict["dsl"]="nucleus_causal_lm_dsl.py"
+
 run_genai_exe_script() {
     for model_dir in "${model_dirs[@]}"; do
         #cd ${greedy_dir}
         # cache false
-        if [[ "$mode" == "ans" ]]; then
-            script="greedy_causal_lm.py"
-        else
-            script="greedy_causal_lm_fc.py"
-        fi
+        script=${greedy_script_dict[$mode]}
+
         python ${script} $model_dir "Why is the Sun yellow?" CPU
         python ${script} $model_dir "Why is the Sun yellow?" GPU
 
-        #cd ${beam_dir}
-        if [[ "$mode" == "ans" ]]; then
-            script="nucleus_causal_lm.py"
-        else
-            script="nucleus_causal_lm_fc.py"
-        fi
+        script=${nucleus_script_dict[$mode]}
         python ${script} $model_dir "Why is the Sun yellow?" CPU
         python ${script} $model_dir "Why is the Sun yellow?" GPU
     done
@@ -92,3 +94,4 @@ fi
 if $run_genai; then
     run_genai_exe_script
 fi
+

@@ -60,7 +60,8 @@ def predict(prompt: str):
     elapsed_time = end_time - start_time
     print(f'cost:{elapsed_time}')
     resp = tokenizer.batch_decode(output, skip_special_tokens=True)[0]
+    print("="*30)
     print(resp)
 
 predict(prompt)
-~                     
+

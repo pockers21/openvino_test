@@ -40,7 +40,7 @@ def main():
 
     print("====")
     # 输出解码后的文本
-    print('Decoded text:', decoded_text)
+    #print('Decoded text:', decoded_text)
 
     start_time = time.time() 
     res = pipe.generate(decoded_text, config)
@@ -53,3 +53,4 @@ def main():
 
 if '__main__' == __name__:
     main()
+
